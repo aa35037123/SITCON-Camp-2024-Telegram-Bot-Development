@@ -6,7 +6,7 @@ authors = ["aa35037123 <wesleyshi0321@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
 pytelegrambotapi = "^4.17.0"
 
 
