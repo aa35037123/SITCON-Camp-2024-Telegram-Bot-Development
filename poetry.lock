@@ -64,6 +64,18 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "telebot"
+version = "0.0.5"
+description = "A Telegram bot library, with simple route decorators."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pyTelegramBotAPI = "*"
+requests = "*"
+
+[[package]]
 name = "urllib3"
 version = "2.2.1"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -80,7 +92,7 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "58c9eb91228312680a1cbd1d161d14e52e17b2b318b810aeb4ab073b86b6bceb"
+content-hash = "1ec2de44ed7b93225e1e3aa6d347515354059e1b20a91bb34933239fa4aa52c2"
 
 [metadata.files]
 certifi = []
@@ -88,4 +100,5 @@ charset-normalizer = []
 idna = []
 pytelegrambotapi = []
 requests = []
+telebot = []
 urllib3 = []
