@@ -5,12 +5,10 @@ import json
 # Replace with your actual bot token
 TOKEN = "6355462545:AAF7_X-9X3JQnfWp_kvpKQ3eqBmNwwsa8bc"
 bot = telebot.TeleBot(TOKEN, parse_mode=None)
-
-# A list to store accounting data
-# accounting_book = {}
+json_filename = f"accounting_data.json"
 
 class AccountingEntry:
-    def __init__(self, item_name, cost, item_type):
+    def __init__(self, item_name, cost, item_type, timestamp=None, year=None, month=None, day=None):
         self.item_name = item_name
         self.cost = cost
         self.item_type = item_type
@@ -20,7 +18,7 @@ class AccountingEntry:
         self.day = datetime.now().day
 
     def __str__(self):
-        return f"{self.year}/{self.month}/{self.day} [{self.timestamp}] {self.item_name}: ${self.cost} ({self.item_type})"
+        return f"[{self.item_type}] {self.item_name}: ${self.cost} at {self.year}/{self.month}/{self.day} {self.timestamp}"
     
     def to_dict(self):
         return {
@@ -35,26 +33,58 @@ class AccountingEntry:
 
 class AccountingBook:
     def __init__(self):
-        self.accouting_book = {}
+        self.accouting_book = []
 
     def add_entry(self, item_name, cost, item_type):
         entry = AccountingEntry(item_name, cost, item_type)
-        self.entries.append(entry)
+        self.accouting_book.append(entry)
 
     def get_total_cost(self):
-        return sum(entry.cost for entry in self.entries)
+        return sum(entry.cost for entry in self.accouting_book)
+    
+    def add_entry_from_dict(self, entry_dict):
+        entry = AccountingEntry(
+            item_name=entry_dict["item_name"],
+            cost=entry_dict["cost"],
+            item_type=entry_dict["item_type"],
+            timestamp=entry_dict["timestamp"],
+            year=entry_dict["year"],
+            month=entry_dict["month"],
+            day=entry_dict["day"]
+        )
+        self.accouting_book.append(entry)
 
     def get_entries_by_type(self, item_type):
-        return [entry for entry in self.entries if entry.item_type == item_type]
+        return [entry for entry in self.accouting_book if entry.item_type == item_type]
 
     def get_entries_by_name(self, item_name):
-        return [entry for entry in self.entries if entry.item_name == item_name]
+        return [entry for entry in self.accouting_book if entry.item_name == item_name]
 
     def to_dict(self):
-        return [entry.to_dict() for entry in self.entries]
+        return [entry.to_dict() for entry in self.accouting_book]
+    def get_history_str(self):
+        # return "\n".join(str(entry) for entry in self.accouting_book)
+        history_str = ""
+        for entry in self.accouting_book:
+            history_str += str(entry) + "\n"
+        return history_str
 
 # Create an instance of AccountingBook
 accounting_book = AccountingBook()
+
+def import_data():
+    try:
+        with open(json_filename, "r") as file:
+            data = json.load(file)
+            for entry_dict in data:
+                accounting_book.add_entry_from_dict(entry_dict)
+        print(f"Data successfully imported from {json_filename}")
+    except FileNotFoundError:
+        print(f"File {json_filename} not found.")
+    except Exception as e:
+        print(f"An error occurred while importing data: {e}")
+
+# import_data()
 
 def get_formatted_time():
     now = datetime.now()
@@ -65,7 +95,7 @@ def get_formatted_time():
     return formatted_time
 
 # Command to start and help
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=[ 'help'])
 def send_welcome(message):
     bot.reply_to(message, "Welcome to the Accounting Bot!\
                  \nAdd expense: /add <item_name> <cost> <item_type>\
@@ -80,7 +110,7 @@ def add_expense(message):
             bot.reply_to(message, "Usage: /add <item_name> <cost> <item_type>")
             return
         _, item_name, cost, item_type = command_parts
-        cost = float(cost)
+        # cost = int(cost)
         accounting_book.add_entry(item_name, cost, item_type)
         bot.reply_to(message, f"Added: {item_name} costing {cost} as {item_type}")
     except ValueError:
@@ -100,22 +130,22 @@ def get_total_cost():
 # Command to show all expenses
 @bot.message_handler(commands=['history'])
 def show_expenses(message):
-    if not accounting_book.entries:
+    if not accounting_book.accouting_book:
         bot.reply_to(message, "No expenses recorded.")
         return
     response = "Expenses:\n"
-    response += str(accounting_book)
+    response += accounting_book.get_history_str()
     bot.reply_to(message, response)
 
 # export accounting data to a json file
 @bot.message_handler(commands=['export'])
 def export_data(message):
     try:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"accounting_data_{timestamp}.json"
-        with open(filename, "w") as file:
+        # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        with open(json_filename, "a") as file:
             json.dump(accounting_book.to_dict(), file, indent=4)
-        bot.reply_to(message, f"Data successfully exported to {filename}")
+        bot.reply_to(message, f"Data successfully exported to {json_filename}")
     except Exception as e:
         bot.reply_to(message, f"An error occurred while exporting data: {e}")
 

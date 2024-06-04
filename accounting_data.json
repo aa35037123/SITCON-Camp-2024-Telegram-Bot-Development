@@ -1,0 +1,20 @@
+[
+    {
+        "item_name": "apple",
+        "cost": 20.0,
+        "item_type": "food",
+        "timestamp": "11:00:39",
+        "year": 2024,
+        "month": 6,
+        "day": 3
+    },
+    {
+        "item_name": "banana",
+        "cost": 10.0,
+        "item_type": "food",
+        "timestamp": "11:00:43",
+        "year": 2024,
+        "month": 6,
+        "day": 3
+    }
+]
