@@ -11,20 +11,30 @@ bot_name = bot_info.first_name  # Gets the bot's first name
 
 emoji = {
     'rock': '👊',
-    'paper': '✋',
-    'scissors': '✌️'
+    'paper': '🖖',
+    'scissors': '🤞'
 } 
 
 choices = ['rock', 'paper', 'scissors']
 
 def gen_markup():
     markup = InlineKeyboardMarkup()
-    markup.row_width = 3
+    # markup.row_width = 3
+    # buttoms = [InlineKeyboardButton(emoji['rock'], callback_data="cb_rock")]
     markup.add(InlineKeyboardButton(emoji['rock'], callback_data="cb_rock"),
-                               InlineKeyboardButton(emoji['paper'], callback_data="cb_paper"),
-                               InlineKeyboardButton(emoji['scissors'], callback_data="cb_scissors"))
+                                InlineKeyboardButton(emoji['paper'], callback_data="cb_paper"),
+                                InlineKeyboardButton(emoji['scissors'], callback_data="cb_scissors"))
     
     return markup
+
+# def gen_markup():
+#     markup = InlineKeyboardMarkup()
+#     markup.row_width = 2
+#     markup.add(InlineKeyboardButton(emoji['rock'], callback_data="cb_rock"))
+#     markup.add(InlineKeyboardButton(emoji['paper'], callback_data="cb_paper"))
+#     markup.add(InlineKeyboardButton(emoji['scissors'], callback_data="cb_scissors"))
+#     return markup
+
 
 
 @bot.callback_query_handler(func=lambda call: True)

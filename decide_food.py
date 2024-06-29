@@ -1,6 +1,7 @@
 import telebot
 from datetime import datetime
 import random
+import json
 
 TOKEN = "6355462545:AAF7_X-9X3JQnfWp_kvpKQ3eqBmNwwsa8bc"
 bot = telebot.TeleBot(TOKEN, parse_mode=None)
@@ -18,7 +19,7 @@ def send_welcome(message):
 @bot.message_handler(commands=['add'])
 def add_food(message):
     bot.reply_to(message, "Okay")
-    foods.append(message.text[4:])
+    foods.append(message.text)
 
 @bot.message_handler(commands=['list'])
 def list_food(message):
@@ -32,6 +33,29 @@ def decide_food(message):
     else:
         food = random.choice(foods)
         bot.reply_to(message, f"You should eat {food}")
+
+@bot.message_handler(commands=['export'])
+def export_food_list(message):
+    try:
+        with open('food_list.json', 'w') as file:
+            json.dump(foods, file, indent=4)
+        bot.reply_to(message, "Food list has been successfully exported to food_list.json.")
+    except Exception as e:
+        bot.reply_to(message, f"An error occurred while exporting the food list: {e}")
+
+@bot.message_handler(commands=['import'])
+def import_food_list(message):
+    try:
+        with open('food_list.json', 'r') as file:
+            imported_foods = json.load(file)
+            global foods
+            foods = imported_foods
+        bot.reply_to(message, "Food list has been successfully imported from food_list.json.")
+    except FileNotFoundError:
+        bot.reply_to(message, "No food_list.json file found. Please export a food list first.")
+    except Exception as e:
+        bot.reply_to(message, f"An error occurred while importing the food list: {e}")
+
 
 bot.infinity_polling()
 

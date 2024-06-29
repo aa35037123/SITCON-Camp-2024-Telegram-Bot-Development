@@ -142,7 +142,7 @@ def show_expenses(message):
 def export_data(message):
     try:
         # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
+        to
         with open(json_filename, "a") as file:
             json.dump(accounting_book.to_dict(), file, indent=4)
         bot.reply_to(message, f"Data successfully exported to {json_filename}")
