@@ -12,9 +12,10 @@ bot_name = bot_info.first_name  # Gets the bot's first name
 
 def gen_markup():
     markup = InlineKeyboardMarkup()
-    markup.row_width = 3
-    markup.add(InlineKeyboardButton('🐶', callback_data="cb_dog"))
-    
+    markup.row_width = 1
+    markup.add(InlineKeyboardButton('🐶', callback_data="cb_dog"),
+                InlineKeyboardButton('🐱', callback_data="cb_cat"),
+                InlineKeyboardButton('🐭', callback_data="cb_mouse"))
     return markup
 
 @bot.message_handler(commands=['inline'])
