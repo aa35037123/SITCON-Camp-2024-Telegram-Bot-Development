@@ -1,7 +1,7 @@
 import telebot
 from datetime import datetime
 
-TOKEN = "6355462545:AAF7_X-9X3JQnfWp_kvpKQ3eqBmNwwsa8bc"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN, parse_mode=None)
 
 print("It's a beautiful day outside. Birds are singing, flowers are blooming...")

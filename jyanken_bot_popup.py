@@ -2,7 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 
-TOKEN = "6355462545:AAF7_X-9X3JQnfWp_kvpKQ3eqBmNwwsa8bc"
+TOKEN = ""
 
 bot = telebot.TeleBot(TOKEN)
 bot_info = bot.get_me()  # Fetches the bot's information
