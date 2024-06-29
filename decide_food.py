@@ -58,4 +58,3 @@ def import_food_list(message):
 
 
 bot.infinity_polling()
-
