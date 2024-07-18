@@ -3,6 +3,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 
+# TODO: 輸入自己 Bot 的 TOKEN
 TOKEN = ""
 
 bot = telebot.TeleBot(TOKEN)
@@ -13,15 +14,15 @@ emoji = {
     'rock': '👊',
     'paper': '🖖',
     'scissors': '🤞'
-} 
+}
 
 def gen_markup():
     markup = InlineKeyboardMarkup()
     markup.row_width = 3
-    # buttoms = [InlineKeyboardButton(emoji['rock'], callback_data="cb_rock")]
-    markup.add(InlineKeyboardButton(emoji['rock'], callback_data="cb_rock"),
-                                InlineKeyboardButton(emoji['paper'], callback_data="cb_paper"),
-                                InlineKeyboardButton(emoji['scissors'], callback_data="cb_scissors"))
+    # TODO: 自訂不同按鈕的 callback_data 的字串內容
+    markup.add(InlineKeyboardButton(emoji['rock'], callback_data=""),
+                                InlineKeyboardButton(emoji['paper'], callback_data=""),
+                                InlineKeyboardButton(emoji['scissors'], callback_data=""))
     
     return markup
 
@@ -29,24 +30,22 @@ choices = ['rock', 'paper', 'scissors']
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-
+    # TODO: 用 random 隨機選擇 Bot 要出的拳
     bot_action = random.choice(choices)
-    player_action = call.data[3:]
+    # TODO: call.data 等於 gen_markup() 內按鈕的 callback_data
+    player_action = call.data
 
-    if player_action == bot_action:
-        # return "It's a tie!"
-        bot.send_message(call.message.chat.id, f"{bot_name}'s action is: {emoji[bot_action]} Your action is: {emoji[player_action]}\
-                            \nIt's a tie!")
-    elif (player_action == 'rock' and bot_action == 'scissors') or \
-            (player_action == 'scissors' and bot_action == 'paper') or \
-            (player_action == 'paper' and bot_action == 'rock'):
-        # return "You win!"
-        bot.send_message(call.message.chat.id, f"{bot_name}'s action is: {emoji[bot_action]} Your action is: {emoji[player_action]}\
-                            \nYou win!\nIt's quite a fun game, isn't it?")
+    # TODO: 使用 if elif else 語法來判斷勝負
+    if : 
+        result = "It's a tie!"
+    elif :
+        result = "You win!"
     else:
-        # return "You lose!"
-        bot.send_message(call.message.chat.id, f"{bot_name}'s action is: {emoji[bot_action]} Your action: {emoji[player_action]}\
-                            \nYou lose! Fight me next time~\nKeep your determination.")
+        result = "You lose!"
+
+    reply_message = f"{bot_name}'s action: {emoji[bot_action]}, Your action: {emoji[player_action]}\n{result}"
+    # TODO: 從 CallbackQuery.message.chat.id 物件中得到所在聊天室的 id
+    bot.send_message(, reply_message)
 
 @bot.message_handler(commands=['help'])
 def send_welcome(message):

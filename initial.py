@@ -4,10 +4,3 @@ import telebot
 TOKEN = ""
 bot = 
 
-
-
-
-
-
-
-

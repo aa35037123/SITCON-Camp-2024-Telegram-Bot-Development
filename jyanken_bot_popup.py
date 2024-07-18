@@ -2,6 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 
+# TODO: 輸入自己 Bot 的 TOKEN
 TOKEN = ""
 
 bot = telebot.TeleBot(TOKEN)
@@ -37,11 +38,11 @@ def callback_query(call):
         result = "You win!"
     else:
         result = "You lose!"
-
+    # TODO: 自己定義要跳出的訊息內容
     popup_message = f"You have choosen {emoji[player_action]}!"
     reply_message = f"{bot_name}'s action: {emoji[bot_action]}, Your action: {emoji[player_action]}\n{result}"
-    
-    bot.answer_callback_query(call.id, popup_message, show_alert=True)
+    # TODO: 用 answer_callback_query() 接收 CallbackQuery.id，並顯示彈出的提示訊息
+    bot.answer_callback_query(, popup_message, show_alert=True)
     bot.send_message(call.message.chat.id, reply_message)
 
 @bot.message_handler(commands=['help'])

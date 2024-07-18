@@ -1,6 +1,7 @@
 import telebot
 from datetime import datetime
 
+# TODO: 輸入自己 Bot 的 TOKEN
 TOKEN = ""
 bot = telebot.TeleBot(TOKEN, parse_mode=None)
 
@@ -12,10 +13,15 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    if message.text == "告訴老實說熊熊":
-        bot.reply_to(message, "其實我不是人類，我是一台機器")
+    """
+    # TODO: 
+    # 實作邏輯判斷，讓 Bot 可以對特定語句反應
+    # 在 reply_to() 第二個參數填入不同回傳訊息
+    """
+    if message.text == :
+        bot.reply_to(message, )
     else:
-        bot.reply_to(message, message.text)
+        bot.reply_to(message, )
 
 bot.infinity_polling()
 

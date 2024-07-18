@@ -3,6 +3,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 
+# TODO: 輸入自己 Bot 的 TOKEN
 TOKEN = ""
 
 bot = telebot.TeleBot(TOKEN)

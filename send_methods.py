@@ -1,15 +1,18 @@
 import telebot
 
-TOKEN = "6355462545:AAF7_X-9X3JQnfWp_kvpKQ3eqBmNwwsa8bc"
+# TODO: 輸入自己 Bot 的 TOKEN
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN, parse_mode=None)
 
-@bot.message_handler(commands=['help'])
+# TODO: 當輸入 /reply 時，讓 Bot 可以用回覆方式傳送訊息
+@bot.message_handler(commands=['reply'])
 def send_welcome(message):
-    bot.reply_to(message, f"Howdy, how are you doing?")
+    bot.
 
-@bot.message_handler(commands=['hello'])
+# TODO: 當輸入 /send 時，讓 Bot 可以直接傳送訊息到聊天室當中
+@bot.message_handler(commands=['send'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, "Hello, it's a beautiful day outside.\
-                        \nBirds are singing, flowers are blooming...")
-
+    bot.
+    
 bot.infinity_polling()
+
